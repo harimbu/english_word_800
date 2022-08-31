@@ -79,14 +79,23 @@ class _EnglishState extends State<English> {
 
   // body
   _body() {
-    return ListView.builder(
-      itemCount: controller.words.length,
-      itemBuilder: (_, index) {
-        return Container(
-          child: _list(item: controller.words[index]),
-        );
-      },
-    );
+    if (controller.words.isEmpty) {
+      return Center(
+        child: Text(
+          '단어가 없습니다.',
+          style: Theme.of(context).textTheme.bodyMedium,
+        ),
+      );
+    } else {
+      return ListView.builder(
+        itemCount: controller.words.length,
+        itemBuilder: (_, index) {
+          return Container(
+            child: _list(item: controller.words[index]),
+          );
+        },
+      );
+    }
   }
 
   _list({required item}) {
