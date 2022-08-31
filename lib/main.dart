@@ -18,7 +18,7 @@ class MyApp extends StatelessWidget {
     return Obx(
       () => GetMaterialApp(
         debugShowCheckedModeBanner: false,
-        title: 'Deep Sleep App',
+        title: '초등 영단어 800',
         themeMode: controller.darkMode.value ? ThemeMode.dark : ThemeMode.light,
         darkTheme: Themes.dark,
         theme: Themes.light,

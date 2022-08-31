@@ -1,7 +1,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.english_word_800">
    <application
-        android:label="english_word_800"
+        android:label="영단어800"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <activity
