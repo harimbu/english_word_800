@@ -1,9 +1,13 @@
 import 'package:badges/badges.dart';
+import 'package:english_word_800/controller.dart/ad_controller.dart';
 import 'package:english_word_800/controller.dart/app_controller.dart';
 import 'package:english_word_800/screen/book.dart';
 import 'package:flutter_tts/flutter_tts.dart';
 import 'package:flutter/material.dart';
+import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:get/get.dart';
+
+const int maxAttempts = 3;
 
 class English extends StatefulWidget {
   final String title;
@@ -16,6 +20,12 @@ class English extends StatefulWidget {
 class _EnglishState extends State<English> {
   final FlutterTts tts = FlutterTts();
   final controller = Get.find<AppController>();
+  final adController = Get.find<Adcontroller>();
+
+  void initSpeak() async {
+    await tts.setLanguage('en');
+    await tts.setSpeechRate(0.4);
+  }
 
   @override
   void initState() {
@@ -24,9 +34,9 @@ class _EnglishState extends State<English> {
     controller.getWords(widget.title);
   }
 
-  initSpeak() async {
-    await tts.setLanguage('en');
-    await tts.setSpeechRate(0.4);
+  @override
+  void dispose() {
+    super.dispose();
   }
 
   @override
@@ -87,13 +97,28 @@ class _EnglishState extends State<English> {
         ),
       );
     } else {
-      return ListView.builder(
-        itemCount: controller.words.length,
-        itemBuilder: (_, index) {
-          return Container(
-            child: _list(item: controller.words[index]),
-          );
-        },
+      return Column(
+        children: [
+          Expanded(
+            child: ListView.builder(
+              itemCount: controller.words.length,
+              itemBuilder: (_, index) {
+                return Container(
+                  child: _list(item: controller.words[index]),
+                );
+              },
+            ),
+          ),
+          if (adController.staticAdLoaded.value)
+            Container(
+              width: adController.staticAd.size.width.toDouble(),
+              height: adController.staticAd.size.height.toDouble(),
+              alignment: Alignment.bottomCenter,
+              child: AdWidget(
+                ad: adController.staticAd,
+              ),
+            ),
+        ],
       );
     }
   }

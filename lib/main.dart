@@ -2,10 +2,13 @@ import 'package:english_word_800/binding/app_binding.dart';
 import 'package:english_word_800/screen/home.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'controller.dart/app_controller.dart';
 import 'theme/themes.dart';
 
 void main() {
+  WidgetsFlutterBinding.ensureInitialized();
+  MobileAds.instance.initialize();
   runApp(MyApp());
 }
 
