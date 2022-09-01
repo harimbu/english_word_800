@@ -1,8 +1,10 @@
 import 'package:badges/badges.dart';
+import 'package:english_word_800/controller.dart/ads_home_controller.dart';
 import 'package:english_word_800/screen/book.dart';
 import 'package:english_word_800/screen/english.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:google_mobile_ads/google_mobile_ads.dart';
 
 import '../controller.dart/app_controller.dart';
 import '../theme/themes.dart';
@@ -10,6 +12,7 @@ import '../theme/themes.dart';
 class Home extends StatelessWidget {
   Home({Key? key}) : super(key: key);
   final controller = Get.find<AppController>();
+  final adcontroller = Get.find<AdsHomeController>();
 
   @override
   Widget build(BuildContext context) {
@@ -65,35 +68,51 @@ class Home extends StatelessWidget {
             SizedBox(width: 26),
           ],
         ),
-        body: Container(
-          padding: EdgeInsets.fromLTRB(38, 20, 38, 10),
-          child: GridView.builder(
-            // physics: NeverScrollableScrollPhysics(),
-            itemCount: controller.menus.length,
-            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-              crossAxisCount: 4,
-              childAspectRatio: 1 / 1,
-              mainAxisSpacing: 20,
-              crossAxisSpacing: 20,
-            ),
-            itemBuilder: (_, index) {
-              return InkWell(
-                onTap: () {
-                  Get.to(() => English(title: controller.menus[index]));
-                },
-                child: Container(
-                  color:
-                      controller.darkMode.value ? Themes.darkBg1 : Themes.bg3,
-                  child: Center(
-                    child: Text(
-                      controller.menus[index],
-                      style: Theme.of(context).textTheme.bodyLarge,
-                    ),
+        body: Column(
+          children: [
+            Expanded(
+              child: Container(
+                padding: EdgeInsets.fromLTRB(38, 20, 38, 10),
+                child: GridView.builder(
+                  // physics: NeverScrollableScrollPhysics(),
+                  itemCount: controller.menus.length,
+                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: 4,
+                    childAspectRatio: 1 / 1,
+                    mainAxisSpacing: 20,
+                    crossAxisSpacing: 20,
                   ),
+                  itemBuilder: (_, index) {
+                    return InkWell(
+                      onTap: () {
+                        Get.to(() => English(title: controller.menus[index]));
+                      },
+                      child: Container(
+                        color: controller.darkMode.value
+                            ? Themes.darkBg1
+                            : Themes.bg3,
+                        child: Center(
+                          child: Text(
+                            controller.menus[index],
+                            style: Theme.of(context).textTheme.bodyLarge,
+                          ),
+                        ),
+                      ),
+                    );
+                  },
                 ),
-              );
-            },
-          ),
+              ),
+            ),
+            if (adcontroller.staticAdLoaded.value)
+              Container(
+                width: adcontroller.staticAd.size.width.toDouble(),
+                height: adcontroller.staticAd.size.height.toDouble(),
+                alignment: Alignment.bottomCenter,
+                child: AdWidget(
+                  ad: adcontroller.staticAd,
+                ),
+              ),
+          ],
         ),
       ),
     );
