@@ -1,5 +1,5 @@
 import 'package:badges/badges.dart';
-import 'package:english_word_800/controller.dart/ads_home_controller.dart';
+import 'package:english_word_800/controller.dart/ads_controller.dart';
 import 'package:english_word_800/screen/book.dart';
 import 'package:english_word_800/screen/english.dart';
 import 'package:flutter/material.dart';
@@ -12,7 +12,7 @@ import '../theme/themes.dart';
 class Home extends StatelessWidget {
   Home({Key? key}) : super(key: key);
   final controller = Get.find<AppController>();
-  final adcontroller = Get.find<AdsHomeController>();
+  final adcontroller = Get.find<AdsController>();
 
   @override
   Widget build(BuildContext context) {
